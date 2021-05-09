@@ -94,6 +94,7 @@ public:
     //---[ Viewing Transform ]--------------------------------
     void applyViewingTransform();
 
+    void frameAll(const double&, const double&, const double&);
 	//---[ Animation ]-------------------------------------
 	void createCurves(float t, float maxX);
 	void deleteCurves();
@@ -110,5 +111,12 @@ public:
 	bool loadKeyframes(const char* szFileName);
 	float keyframeTime(int keyframe) const;
 };
+
+void MakeDiagonal(Mat4f& m, float k);
+void MakeHScale(Mat4f& m, const Vec3f& s);
+void MakeHTrans(Mat4f& m, const Vec3f& s);
+void MakeHRotX(Mat4f& m, float theta);
+void MakeHRotY(Mat4f& m, float theta);
+void MakeHRotZ(Mat4f& m, float theta);
 
 #endif

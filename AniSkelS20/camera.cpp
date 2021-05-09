@@ -390,6 +390,21 @@ bool Camera::loadKeyframes(const char* szFileName)
 	return false;
 }
 
+// Set the position of camera such as the whole model can been seen
+void Camera::frameAll(const double& x, const double& y, const double& z) {
+	this->mElevation = 0.2f;
+	this->mAzimuth = 3.141593;
+	this->mDolly = -48.720108;
+	this->mPosition = Vec3f(0.000004f + x, 9.679192 + y, 47.748951 + z);
+	this->mLookAt = Vec3f(0 + x, 0 + y, 0 + z);
+	this->mUpVector = Vec3f(0, 1, 0);
+	this->mDirtyTransform = false;
+	gluLookAt(mPosition[0], mPosition[1], mPosition[2],
+		mLookAt[0], mLookAt[1], mLookAt[2],
+		mUpVector[0], mUpVector[1], mUpVector[2]);
+}
+
+
 float Camera::keyframeTime(int keyframe) const
 {
 	if (mKeyframes[0]) {
