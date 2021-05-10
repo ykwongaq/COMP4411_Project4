@@ -1,0 +1,40 @@
+﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  graphwidget.cpp
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(132,30): warning C4018: '<': signed/unsigned mismatch
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(157,28): warning C4018: '<': signed/unsigned mismatch
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(509,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(518,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(526,25): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(526,16): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(528,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(547,26): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(547,17): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(577,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(609,26): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(609,17): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(628,26): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(628,17): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(633,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(652,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(658,42): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(658,33): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(659,40): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(659,31): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(664,40): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(664,31): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(669,40): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(669,31): warning C4244: 'argument': conversion from 'const int' to 'const float', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(761,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(805,28): warning C4018: '<': signed/unsigned mismatch
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(860,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(904,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(990,2): warning C4018: '<': signed/unsigned mismatch
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(1012,2): warning C4018: '<': signed/unsigned mismatch
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(1034,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(1099,80): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(1106,81): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(1110,8): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(1111,8): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(1137,94): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\graphwidget.cpp(1138,95): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Animator.vcxproj -> C:\Users\WongYukKwan\Documents\HKUST\Year 4\COMP4411\Project_4\COMP4411_Project4\AniSkelS20\Debug\modeler.exe
