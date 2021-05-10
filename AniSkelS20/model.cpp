@@ -9,6 +9,9 @@
 #include "modelerapp.h"
 #include "camera.h"
 #include "bitmap.h"
+#include "particleSystem.h"
+#include <random>
+#include <time.h>
 
 int Model::LEFT_SHOULDER_MOVEMENT = 1;
 int Model::RIGHT_SHOULDER_MOVEMENT = 1;
@@ -530,6 +533,9 @@ void Model::drawLsystem(const std::vector<char>& sentence, int option) {
 // We are going to override (is that the right word?) the draw()
 // method of ModelerView to draw out SampleModel
 void Model::draw() {
+
+	srand(time(NULL));
+
 	// Determine adjust body component or not
 	bool isAdjust = VAL(ADJUST_BODY) == 1;
 	bool isTexture = VAL(TEXTURE_MAPPING) == 1;
@@ -548,6 +554,10 @@ void Model::draw() {
 	// matrix stuff.  Unless you want to fudge directly with the 
 	// projection matrix, don't bother with this ...
 	ModelerView::draw();
+	Mat4f CameraM = getModelViewMatrix();
+
+
+
 	if (VAL(IK_ENABLE))
 		this->drawArmVector();
 	setDiffuseColor(COLOR_WHITE);
@@ -700,7 +710,10 @@ void Model::draw() {
 
 	if (level >= 3) {
 		drawTorus(1.5, 0.2, isTexture);
+		
 	}
+
+	
 
 	setDiffuseColor(COLOR_GREEN);
 	glTranslated(0, 0, 5);
@@ -884,6 +897,29 @@ void Model::draw() {
 
 		glTranslated(-0.4, -0.2, 0);
 		drawBox(0.1f, 0.4, 0.6);
+		//glRotated(+90, 0.0, 0.0, 1.0);
+		/*  particle system */
+		//glPushMatrix();
+		//glTranslated(0, 0, -0.3);
+		Mat4f CurrModelM1 = getModelViewMatrix();
+		ParticleSystem* ps1 = ModelerApplication::Instance()->GetParticleSystem();
+		float currt1 = ModelerApplication::Instance()->GetTime();
+		int currfps1 = ModelerApplication::Instance()->GetFps();
+		cout << "#frame:" << (currt1 * currfps1) << " " << ((int)currt1 * currfps1 % currfps1 == 0) << endl;
+		if ((int)(currt1 * currfps1) % currfps1 == 0) ps1->spawnParticles(CameraM, CurrModelM1, currt1);
+		glTranslated(0, 0, -0.1);
+		double ran = (double)rand() / (RAND_MAX + 1.0);
+		Mat4f CurrModelM2 = getModelViewMatrix();
+		ParticleSystem* ps2 = ModelerApplication::Instance()->GetParticleSystem();
+		float currt2 = (ModelerApplication::Instance()->GetTime()) + ran;
+		int currfps2 = ModelerApplication::Instance()->GetFps();
+		cout << "#frame:" << (currt2 * currfps2) << " " << ((int)currt2 * currfps2 % currfps2 == 0) << endl;
+		if ((int)(currt2 * currfps2) % currfps2 == 0) ps2->spawnParticles(CameraM, CurrModelM2, currt2);
+		glTranslated(0, 0, 0.1);
+		//glTranslated(0, 0, 0.3);
+		//glPopMatrix();
+		//glRotated(-90, 0.0, 0.0, 1.0);
+
 
 		//translate back
 		glTranslated(+0.4, +0.2, 0);
@@ -1031,6 +1067,8 @@ void Model::draw() {
 				metaballFunc(VAL(METABALL_MERGE), 0, 0, x, y, z); };
 
 			drawMetaball(m_func(1.12, 0, 0), 0.8, m_func);
+
+	
 
 			//translate back
 			//glScaled(1 / VAL(METABALL_LENGTH), 1 / 0.5, 1 / 0.8);

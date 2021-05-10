@@ -2,23 +2,27 @@
  * ParticleSystem class
  ***********************/
 
-/**
- * The particle system class simply "manages" a collection of particles.
- * Its primary responsibility is to run the simulation, evolving particles
- * over time according to the applied forces using Euler's method.
- * This header file contains the functions that you are required to implement.
- * (i.e. the rest of the code relies on this interface)
- * In addition, there are a few suggested state variables included.
- * You should add to this class (and probably create new classes to model
- * particles and forces) to build your system.
- */
+ /**
+  * The particle system class simply "manages" a collection of particles.
+  * Its primary responsibility is to run the simulation, evolving particles
+  * over time according to the applied forces using Euler's method.
+  * This header file contains the functions that you are required to implement.
+  * (i.e. the rest of the code relies on this interface)
+  * In addition, there are a few suggested state variables included.
+  * You should add to this class (and probably create new classes to model
+  * particles and forces) to build your system.
+  */
 
 #ifndef __PARTICLE_SYSTEM_H__
 #define __PARTICLE_SYSTEM_H__
 
+
 #include "vec.h"
-
-
+#include "mat.h"
+#include <vector>
+#include <map>
+#include "force.h"
+#include "particle.h"
 
 class ParticleSystem {
 
@@ -60,9 +64,14 @@ public:
 
 	// This function should clear out your data structure
 	// of baked particles (without leaking memory).
-	virtual void clearBaked();	
+	virtual void clearBaked();
 
 
+	// Check whether the frame has been baked
+	virtual bool isBakedAt(float t);
+
+	// Spawn Particles at particular position
+	virtual void spawnParticles(Mat4f CameraM, Mat4f CurrModelM, float currt);
 
 	// These accessor fxns are implemented for you
 	float getBakeStartTime() { return bake_start_time; }
@@ -75,7 +84,9 @@ public:
 
 
 protected:
-	
+	vector<Particle> particle_vec;		// vector store all particles 
+	vector<Force*> force_vec;			// vector store all global forces
+	map<float, vector<Particle>> bake_storage; //data structure store baked particle states
 
 
 	/** Some baking-related state **/
