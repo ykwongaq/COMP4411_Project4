@@ -1,3 +1,4 @@
+#pragma once
 #ifndef MODEL_H
 #define MODEL_H
 
@@ -13,7 +14,7 @@
 class Model : public ModelerView {
 
 public:
-	Model(int x, int y, int w, int h, char *label);
+	Model(int x, int y, int w, int h, char* label);
 
 	virtual void draw();
 
@@ -34,7 +35,7 @@ public:
 	void drawLeftFoot();
 	std::vector<char> gsentence1(const int stage);// left wings
 	std::vector<char> gsentence2(const int stage); // right wings
-	void drawLsystem(const std::vector<char> &sentence, int option);
+	void drawLsystem(const std::vector<char>& sentence, int option);
 
 	// Angle rotated in each flame in animation
 	static int LEFT_SHOULDER_MOVEMENT;
@@ -57,7 +58,7 @@ public:
 
 private:
 
-	unsigned char *textureImg;
+	unsigned char* textureImg;
 	int textImgWidth;
 	int textImgHeight;
 	GLuint tex;
@@ -72,8 +73,8 @@ private:
 
 	float l1, l2;
 
-	void rotate(const double &x, const double &y, const double &z);	// Rotate the body
-	void back_rotate(const double &x, const double &y, const double &z); // Back rotate the body
+	void rotate(const double& x, const double& y, const double& z);	// Rotate the body
+	void back_rotate(const double& x, const double& y, const double& z); // Back rotate the body
 	void prepare_texture();
 	float calAngle(Vec3f v1, Vec3f v2);
 	float rad(float degree);

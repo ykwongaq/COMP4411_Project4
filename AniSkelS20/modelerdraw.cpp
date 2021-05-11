@@ -5,43 +5,45 @@
 #include <GL/glu.h>
 #include <cstdio>
 #include <math.h>
+#include "vec.h"
+#include "mat.h"
 
 // ********************************************************
 // Support functions from previous version of modeler
 // ********************************************************
-void _dump_current_modelview( void )
+void _dump_current_modelview(void)
 {
-    ModelerDrawState *mds = ModelerDrawState::Instance();
-    
+    ModelerDrawState* mds = ModelerDrawState::Instance();
+
     if (mds->m_rayFile == NULL)
     {
         fprintf(stderr, "No .ray file opened for writing, bailing out.\n");
         exit(-1);
     }
-    
+
     GLdouble mv[16];
-    glGetDoublev( GL_MODELVIEW_MATRIX, mv );
-    fprintf( mds->m_rayFile, 
+    glGetDoublev(GL_MODELVIEW_MATRIX, mv);
+    fprintf(mds->m_rayFile,
         "transform(\n    (%f,%f,%f,%f),\n    (%f,%f,%f,%f),\n     (%f,%f,%f,%f),\n    (%f,%f,%f,%f),\n",
         mv[0], mv[4], mv[8], mv[12],
         mv[1], mv[5], mv[9], mv[13],
         mv[2], mv[6], mv[10], mv[14],
-        mv[3], mv[7], mv[11], mv[15] );
+        mv[3], mv[7], mv[11], mv[15]);
 }
 
-void _dump_current_material( void )
+void _dump_current_material(void)
 {
-    ModelerDrawState *mds = ModelerDrawState::Instance();
-    
+    ModelerDrawState* mds = ModelerDrawState::Instance();
+
     if (mds->m_rayFile == NULL)
     {
         fprintf(stderr, "No .ray file opened for writing, bailing out.\n");
         exit(-1);
     }
-    
-    fprintf( mds->m_rayFile, 
+
+    fprintf(mds->m_rayFile,
         "material={\n    diffuse=(%f,%f,%f);\n    ambient=(%f,%f,%f);\n}\n",
-        mds->m_diffuseColor[0], mds->m_diffuseColor[1], mds->m_diffuseColor[2], 
+        mds->m_diffuseColor[0], mds->m_diffuseColor[1], mds->m_diffuseColor[2],
         mds->m_diffuseColor[0], mds->m_diffuseColor[1], mds->m_diffuseColor[2]);
 }
 
@@ -52,16 +54,16 @@ ModelerDrawState* ModelerDrawState::m_instance = NULL;
 
 ModelerDrawState::ModelerDrawState() : m_drawMode(NORMAL), m_quality(MEDIUM)
 {
-    float grey[]  = {.5f, .5f, .5f, 1};
-    float white[] = {1,1,1,1};
-    float black[] = {0,0,0,1};
-    
+    float grey[] = { .5f, .5f, .5f, 1 };
+    float white[] = { 1,1,1,1 };
+    float black[] = { 0,0,0,1 };
+
     memcpy(m_ambientColor, black, 4 * sizeof(float));
     memcpy(m_diffuseColor, grey, 4 * sizeof(float));
     memcpy(m_specularColor, white, 4 * sizeof(float));
-    
+
     m_shininess = 0.5;
-    
+
     m_rayFile = NULL;
 }
 
@@ -79,53 +81,53 @@ ModelerDrawState* ModelerDrawState::Instance()
 
 void setAmbientColor(float r, float g, float b)
 {
-    ModelerDrawState *mds = ModelerDrawState::Instance();
-    
+    ModelerDrawState* mds = ModelerDrawState::Instance();
+
     mds->m_ambientColor[0] = (GLfloat)r;
     mds->m_ambientColor[1] = (GLfloat)g;
     mds->m_ambientColor[2] = (GLfloat)b;
     mds->m_ambientColor[3] = (GLfloat)1.0;
-    
+
     if (mds->m_drawMode == NORMAL)
-        glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, mds->m_ambientColor);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mds->m_ambientColor);
 }
 
 void setDiffuseColor(float r, float g, float b)
 {
-    ModelerDrawState *mds = ModelerDrawState::Instance();
-    
+    ModelerDrawState* mds = ModelerDrawState::Instance();
+
     mds->m_diffuseColor[0] = (GLfloat)r;
     mds->m_diffuseColor[1] = (GLfloat)g;
     mds->m_diffuseColor[2] = (GLfloat)b;
     mds->m_diffuseColor[3] = (GLfloat)1.0;
-    
+
     if (mds->m_drawMode == NORMAL)
-        glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, mds->m_diffuseColor);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mds->m_diffuseColor);
     else
-        glColor3f(r,g,b);
+        glColor3f(r, g, b);
 }
 
 void setSpecularColor(float r, float g, float b)
-{	
-    ModelerDrawState *mds = ModelerDrawState::Instance();
-    
+{
+    ModelerDrawState* mds = ModelerDrawState::Instance();
+
     mds->m_specularColor[0] = (GLfloat)r;
     mds->m_specularColor[1] = (GLfloat)g;
     mds->m_specularColor[2] = (GLfloat)b;
     mds->m_specularColor[3] = (GLfloat)1.0;
-    
+
     if (mds->m_drawMode == NORMAL)
-        glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, mds->m_specularColor);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mds->m_specularColor);
 }
 
 void setShininess(float s)
 {
-    ModelerDrawState *mds = ModelerDrawState::Instance();
-    
+    ModelerDrawState* mds = ModelerDrawState::Instance();
+
     mds->m_shininess = (GLfloat)s;
-    
+
     if (mds->m_drawMode == NORMAL)
-        glMaterialf( GL_FRONT, GL_SHININESS, mds->m_shininess);
+        glMaterialf(GL_FRONT, GL_SHININESS, mds->m_shininess);
 }
 
 void setDrawMode(DrawModeSetting_t drawMode)
@@ -140,24 +142,24 @@ void setQuality(QualitySetting_t quality)
 
 bool openRayFile(const char rayFileName[])
 {
-    ModelerDrawState *mds = ModelerDrawState::Instance();
+    ModelerDrawState* mds = ModelerDrawState::Instance();
 
-	fprintf(stderr, "Ray file format output is buggy (ehsu)\n");
-    
+    fprintf(stderr, "Ray file format output is buggy (ehsu)\n");
+
     if (!rayFileName)
         return false;
-    
-    if (mds->m_rayFile) 
+
+    if (mds->m_rayFile)
         closeRayFile();
-    
+
     mds->m_rayFile = fopen(rayFileName, "w");
-    
-    if (mds->m_rayFile != NULL) 
+
+    if (mds->m_rayFile != NULL)
     {
-        fprintf( mds->m_rayFile, "SBT-raytracer 1.0\n\n" );
-        fprintf( mds->m_rayFile, "camera { fov=30; }\n\n" );
-        fprintf( mds->m_rayFile, 
-            "directional_light { direction=(-1,-1,-1); color=(0.7,0.7,0.7); }\n\n" );
+        fprintf(mds->m_rayFile, "SBT-raytracer 1.0\n\n");
+        fprintf(mds->m_rayFile, "camera { fov=30; }\n\n");
+        fprintf(mds->m_rayFile,
+            "directional_light { direction=(-1,-1,-1); color=(0.7,0.7,0.7); }\n\n");
         return true;
     }
     else
@@ -166,261 +168,261 @@ bool openRayFile(const char rayFileName[])
 
 void _setupOpenGl()
 {
-    ModelerDrawState *mds = ModelerDrawState::Instance();
-	switch (mds->m_drawMode)
-	{
-	case NORMAL:
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		glShadeModel(GL_SMOOTH);
-		break;
-	case FLATSHADE:
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		glShadeModel(GL_FLAT);
-		break;
-	case WIREFRAME:
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glShadeModel(GL_FLAT);
-	default:
-		break;
-	}
+    ModelerDrawState* mds = ModelerDrawState::Instance();
+    switch (mds->m_drawMode)
+    {
+    case NORMAL:
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glShadeModel(GL_SMOOTH);
+        break;
+    case FLATSHADE:
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glShadeModel(GL_FLAT);
+        break;
+    case WIREFRAME:
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glShadeModel(GL_FLAT);
+    default:
+        break;
+    }
 
 }
 
 void closeRayFile()
 {
-    ModelerDrawState *mds = ModelerDrawState::Instance();
-    
-    if (mds->m_rayFile) 
+    ModelerDrawState* mds = ModelerDrawState::Instance();
+
+    if (mds->m_rayFile)
         fclose(mds->m_rayFile);
-    
+
     mds->m_rayFile = NULL;
 }
 
 void drawSphere(double r)
 {
-    ModelerDrawState *mds = ModelerDrawState::Instance();
+    ModelerDrawState* mds = ModelerDrawState::Instance();
 
-	_setupOpenGl();
-    
+    _setupOpenGl();
+
     if (mds->m_rayFile)
     {
         _dump_current_modelview();
-        fprintf(mds->m_rayFile, "scale(%f,%f,%f,sphere {\n", r, r, r );
+        fprintf(mds->m_rayFile, "scale(%f,%f,%f,sphere {\n", r, r, r);
         _dump_current_material();
-        fprintf(mds->m_rayFile, "}))\n" );
+        fprintf(mds->m_rayFile, "}))\n");
     }
     else
     {
-        int divisions; 
+        int divisions;
         GLUquadricObj* gluq;
-        
-        switch(mds->m_quality)
+
+        switch (mds->m_quality)
         {
-        case HIGH: 
+        case HIGH:
             divisions = 32; break;
-        case MEDIUM: 
+        case MEDIUM:
             divisions = 20; break;
         case LOW:
             divisions = 12; break;
         case POOR:
             divisions = 8; break;
         }
-        
+
         gluq = gluNewQuadric();
-        gluQuadricDrawStyle( gluq, GLU_FILL );
-        gluQuadricTexture( gluq, GL_TRUE );
+        gluQuadricDrawStyle(gluq, GLU_FILL);
+        gluQuadricTexture(gluq, GL_TRUE);
         gluSphere(gluq, r, divisions, divisions);
-        gluDeleteQuadric( gluq );
+        gluDeleteQuadric(gluq);
     }
 }
 
 
-void drawBox( double x, double y, double z )
+void drawBox(double x, double y, double z)
 {
-    ModelerDrawState *mds = ModelerDrawState::Instance();
+    ModelerDrawState* mds = ModelerDrawState::Instance();
 
-	_setupOpenGl();
-    
+    _setupOpenGl();
+
     if (mds->m_rayFile)
     {
         _dump_current_modelview();
-        fprintf(mds->m_rayFile,  
-            "scale(%f,%f,%f,translate(0.5,0.5,0.5,box {\n", x, y, z );
+        fprintf(mds->m_rayFile,
+            "scale(%f,%f,%f,translate(0.5,0.5,0.5,box {\n", x, y, z);
         _dump_current_material();
-        fprintf(mds->m_rayFile,  "})))\n" );
+        fprintf(mds->m_rayFile, "})))\n");
     }
     else
     {
         /* remember which matrix mode OpenGL was in. */
         int savemode;
-        glGetIntegerv( GL_MATRIX_MODE, &savemode );
-        
+        glGetIntegerv(GL_MATRIX_MODE, &savemode);
+
         /* switch to the model matrix and scale by x,y,z. */
-        glMatrixMode( GL_MODELVIEW );
+        glMatrixMode(GL_MODELVIEW);
         glPushMatrix();
-        glScaled( x, y, z );
-        
-        glBegin( GL_QUADS );
-        
-        glNormal3d( 0.0, 0.0, -1.0 );
-        glVertex3d( 0.0, 0.0, 0.0 ); glVertex3d( 0.0, 1.0, 0.0 );
-        glVertex3d( 1.0, 1.0, 0.0 ); glVertex3d( 1.0, 0.0, 0.0 );
-        
-        glNormal3d( 0.0, -1.0, 0.0 );
-        glVertex3d( 0.0, 0.0, 0.0 ); glVertex3d( 1.0, 0.0, 0.0 );
-        glVertex3d( 1.0, 0.0, 1.0 ); glVertex3d( 0.0, 0.0, 1.0 );
-        
-        glNormal3d( -1.0, 0.0, 0.0 );
-        glVertex3d( 0.0, 0.0, 0.0 ); glVertex3d( 0.0, 0.0, 1.0 );
-        glVertex3d( 0.0, 1.0, 1.0 ); glVertex3d( 0.0, 1.0, 0.0 );
-        
-        glNormal3d( 0.0, 0.0, 1.0 );
-        glVertex3d( 0.0, 0.0, 1.0 ); glVertex3d( 1.0, 0.0, 1.0 );
-        glVertex3d( 1.0, 1.0, 1.0 ); glVertex3d( 0.0, 1.0, 1.0 );
-        
-        glNormal3d( 0.0, 1.0, 0.0 );
-        glVertex3d( 0.0, 1.0, 0.0 ); glVertex3d( 0.0, 1.0, 1.0 );
-        glVertex3d( 1.0, 1.0, 1.0 ); glVertex3d( 1.0, 1.0, 0.0 );
-        
-        glNormal3d( 1.0, 0.0, 0.0 );
-        glVertex3d( 1.0, 0.0, 0.0 ); glVertex3d( 1.0, 1.0, 0.0 );
-        glVertex3d( 1.0, 1.0, 1.0 ); glVertex3d( 1.0, 0.0, 1.0 );
-        
+        glScaled(x, y, z);
+
+        glBegin(GL_QUADS);
+
+        glNormal3d(0.0, 0.0, -1.0);
+        glVertex3d(0.0, 0.0, 0.0); glVertex3d(0.0, 1.0, 0.0);
+        glVertex3d(1.0, 1.0, 0.0); glVertex3d(1.0, 0.0, 0.0);
+
+        glNormal3d(0.0, -1.0, 0.0);
+        glVertex3d(0.0, 0.0, 0.0); glVertex3d(1.0, 0.0, 0.0);
+        glVertex3d(1.0, 0.0, 1.0); glVertex3d(0.0, 0.0, 1.0);
+
+        glNormal3d(-1.0, 0.0, 0.0);
+        glVertex3d(0.0, 0.0, 0.0); glVertex3d(0.0, 0.0, 1.0);
+        glVertex3d(0.0, 1.0, 1.0); glVertex3d(0.0, 1.0, 0.0);
+
+        glNormal3d(0.0, 0.0, 1.0);
+        glVertex3d(0.0, 0.0, 1.0); glVertex3d(1.0, 0.0, 1.0);
+        glVertex3d(1.0, 1.0, 1.0); glVertex3d(0.0, 1.0, 1.0);
+
+        glNormal3d(0.0, 1.0, 0.0);
+        glVertex3d(0.0, 1.0, 0.0); glVertex3d(0.0, 1.0, 1.0);
+        glVertex3d(1.0, 1.0, 1.0); glVertex3d(1.0, 1.0, 0.0);
+
+        glNormal3d(1.0, 0.0, 0.0);
+        glVertex3d(1.0, 0.0, 0.0); glVertex3d(1.0, 1.0, 0.0);
+        glVertex3d(1.0, 1.0, 1.0); glVertex3d(1.0, 0.0, 1.0);
+
         glEnd();
-        
+
         /* restore the model matrix stack, and switch back to the matrix
         mode we were in. */
         glPopMatrix();
-        glMatrixMode( savemode );
+        glMatrixMode(savemode);
     }
 }
 
-void drawTextureBox( double x, double y, double z )
+void drawTextureBox(double x, double y, double z)
 {
     // NOT IMPLEMENTED, SORRY (ehsu)
 }
 
-void drawCylinder( double h, double r1, double r2 )
+void drawCylinder(double h, double r1, double r2)
 {
-    ModelerDrawState *mds = ModelerDrawState::Instance();
+    ModelerDrawState* mds = ModelerDrawState::Instance();
     int divisions;
 
-	_setupOpenGl();
-    
-    switch(mds->m_quality)
+    _setupOpenGl();
+
+    switch (mds->m_quality)
     {
-    case HIGH: 
+    case HIGH:
         divisions = 32; break;
-    case MEDIUM: 
+    case MEDIUM:
         divisions = 20; break;
     case LOW:
         divisions = 12; break;
     case POOR:
         divisions = 8; break;
     }
-    
+
     if (mds->m_rayFile)
     {
         _dump_current_modelview();
-        fprintf(mds->m_rayFile, 
-            "cone { height=%f; bottom_radius=%f; top_radius=%f;\n", h, r1, r2 );
+        fprintf(mds->m_rayFile,
+            "cone { height=%f; bottom_radius=%f; top_radius=%f;\n", h, r1, r2);
         _dump_current_material();
-        fprintf(mds->m_rayFile, "})\n" );
+        fprintf(mds->m_rayFile, "})\n");
     }
     else
     {
         GLUquadricObj* gluq;
-        
+
         /* GLU will again do the work.  draw the sides of the cylinder. */
         gluq = gluNewQuadric();
-        gluQuadricDrawStyle( gluq, GLU_FILL );
-        gluQuadricTexture( gluq, GL_TRUE );
-        gluCylinder( gluq, r1, r2, h, divisions, divisions);
-        gluDeleteQuadric( gluq );
-        
-        if ( r1 > 0.0 )
+        gluQuadricDrawStyle(gluq, GLU_FILL);
+        gluQuadricTexture(gluq, GL_TRUE);
+        gluCylinder(gluq, r1, r2, h, divisions, divisions);
+        gluDeleteQuadric(gluq);
+
+        if (r1 > 0.0)
         {
-        /* if the r1 end does not come to a point, draw a flat disk to
-            cover it up. */
-            
+            /* if the r1 end does not come to a point, draw a flat disk to
+                cover it up. */
+
             gluq = gluNewQuadric();
-            gluQuadricDrawStyle( gluq, GLU_FILL );
-            gluQuadricTexture( gluq, GL_TRUE );
-            gluQuadricOrientation( gluq, GLU_INSIDE );
-            gluDisk( gluq, 0.0, r1, divisions, divisions);
-            gluDeleteQuadric( gluq );
+            gluQuadricDrawStyle(gluq, GLU_FILL);
+            gluQuadricTexture(gluq, GL_TRUE);
+            gluQuadricOrientation(gluq, GLU_INSIDE);
+            gluDisk(gluq, 0.0, r1, divisions, divisions);
+            gluDeleteQuadric(gluq);
         }
-        
-        if ( r2 > 0.0 )
+
+        if (r2 > 0.0)
         {
-        /* if the r2 end does not come to a point, draw a flat disk to
-            cover it up. */
-            
-            /* save the current matrix mode. */	
+            /* if the r2 end does not come to a point, draw a flat disk to
+                cover it up. */
+
+                /* save the current matrix mode. */
             int savemode;
-            glGetIntegerv( GL_MATRIX_MODE, &savemode );
-            
+            glGetIntegerv(GL_MATRIX_MODE, &savemode);
+
             /* translate the origin to the other end of the cylinder. */
-            glMatrixMode( GL_MODELVIEW );
+            glMatrixMode(GL_MODELVIEW);
             glPushMatrix();
-            glTranslated( 0.0, 0.0, h );
-            
+            glTranslated(0.0, 0.0, h);
+
             /* draw a disk centered at the new origin. */
             gluq = gluNewQuadric();
-            gluQuadricDrawStyle( gluq, GLU_FILL );
-            gluQuadricTexture( gluq, GL_TRUE );
-            gluQuadricOrientation( gluq, GLU_OUTSIDE );
-            gluDisk( gluq, 0.0, r2, divisions, divisions);
-            gluDeleteQuadric( gluq );
-            
+            gluQuadricDrawStyle(gluq, GLU_FILL);
+            gluQuadricTexture(gluq, GL_TRUE);
+            gluQuadricOrientation(gluq, GLU_OUTSIDE);
+            gluDisk(gluq, 0.0, r2, divisions, divisions);
+            gluDeleteQuadric(gluq);
+
             /* restore the matrix stack and mode. */
             glPopMatrix();
-            glMatrixMode( savemode );
+            glMatrixMode(savemode);
         }
     }
-    
-}
-void drawTriangle( double x1, double y1, double z1,
-                   double x2, double y2, double z2,
-                   double x3, double y3, double z3 )
-{
-    ModelerDrawState *mds = ModelerDrawState::Instance();
 
-	_setupOpenGl();
+}
+void drawTriangle(double x1, double y1, double z1,
+    double x2, double y2, double z2,
+    double x3, double y3, double z3)
+{
+    ModelerDrawState* mds = ModelerDrawState::Instance();
+
+    _setupOpenGl();
 
     if (mds->m_rayFile)
     {
         _dump_current_modelview();
-        fprintf(mds->m_rayFile, 
-            "polymesh { points=((%f,%f,%f),(%f,%f,%f),(%f,%f,%f)); faces=((0,1,2));\n", x1, y1, z1, x2, y2, z2, x3, y3, z3 );
+        fprintf(mds->m_rayFile,
+            "polymesh { points=((%f,%f,%f),(%f,%f,%f),(%f,%f,%f)); faces=((0,1,2));\n", x1, y1, z1, x2, y2, z2, x3, y3, z3);
         _dump_current_material();
-        fprintf(mds->m_rayFile, "})\n" );
+        fprintf(mds->m_rayFile, "})\n");
     }
     else
     {
         double a, b, c, d, e, f;
-        
+
         /* the normal to the triangle is the cross product of two of its edges. */
-        a = x2-x1;
-        b = y2-y1;
-        c = z2-z1;
-        
-        d = x3-x1;
-        e = y3-y1;
-        f = z3-z1;
-        
-        glBegin( GL_TRIANGLES );
-        glNormal3d( b*f - c*e, c*d - a*f, a*e - b*d );
-        glVertex3d( x1, y1, z1 );
-        glVertex3d( x2, y2, z2 );
-        glVertex3d( x3, y3, z3 );
+        a = x2 - x1;
+        b = y2 - y1;
+        c = z2 - z1;
+
+        d = x3 - x1;
+        e = y3 - y1;
+        f = z3 - z1;
+
+        glBegin(GL_TRIANGLES);
+        glNormal3d(b * f - c * e, c * d - a * f, a * e - b * d);
+        glVertex3d(x1, y1, z1);
+        glVertex3d(x2, y2, z2);
+        glVertex3d(x3, y3, z3);
         glEnd();
     }
 }
 
 
 // Draw torus
-void drawTorus(const double &outer_r, const double &inner_r, bool isTexture) {
+void drawTorus(const double& outer_r, const double& inner_r, bool isTexture) {
     // Torus in 3D:
     // x = (R + r cos(theta))cos(gamma)
     // y = (R + r cos(theta))sin(gamma)
@@ -431,16 +433,16 @@ void drawTorus(const double &outer_r, const double &inner_r, bool isTexture) {
 
     int numt = 32;
 
-    ModelerDrawState *mds = ModelerDrawState::Instance();
+    ModelerDrawState* mds = ModelerDrawState::Instance();
     switch (mds->m_quality) {
-        case HIGH:
-            numt = 16; break;
-        case MEDIUM:
-            numt = 14; break;
-        case LOW:
-            numt = 10; break;
-        case POOR:
-            numt = 8; break;
+    case HIGH:
+        numt = 16; break;
+    case MEDIUM:
+        numt = 14; break;
+    case LOW:
+        numt = 10; break;
+    case POOR:
+        numt = 8; break;
     }
 
     int numc = 2 * numt;
@@ -523,9 +525,9 @@ void triangulize(double threshold, Cell grid) {
         0xe90, 0xf99, 0xc93, 0xd9a, 0xa96, 0xb9f, 0x895, 0x99c,
         0x69c, 0x795, 0x49f, 0x596, 0x29a, 0x393, 0x99 , 0x190,
         0xf00, 0xe09, 0xd03, 0xc0a, 0xb06, 0xa0f, 0x905, 0x80c,
-        0x70c, 0x605, 0x50f, 0x406, 0x30a, 0x203, 0x109, 0x0};
+        0x70c, 0x605, 0x50f, 0x406, 0x30a, 0x203, 0x109, 0x0 };
     int triTable[256][16] =
-    {{ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 },
+    { { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 },
     { 0, 8, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 },
     { 0, 1, 9, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 },
     { 1, 8, 3, 9, 8, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 },
@@ -780,7 +782,7 @@ void triangulize(double threshold, Cell grid) {
     { 1, 3, 8, 9, 1, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 },
     { 0, 9, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 },
     { 0, 3, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 },
-    { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 }};
+    { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 } };
 
     /*
     Determine the index into the edge table which
@@ -880,4 +882,30 @@ void drawMetaball(double threshold, const double r, double (*metaballFunc)(doubl
             }
         }
     }
+}
+
+Mat4f getModelViewMatrix()
+{
+    /**************************
+    **
+    **	GET THE OPENGL MODELVIEW MATRIX
+    **
+    **	Since OpenGL stores it's matricies in
+    **	column major order and our library
+    **	use row major order, we will need to
+    **	transpose what OpenGL gives us before returning.
+    **
+    **	Hint:  Use look up glGetFloatv or glGetDoublev
+    **	for how to get these values from OpenGL.
+    **
+    *******************************/
+
+    GLfloat m[16];
+    glGetFloatv(GL_MODELVIEW_MATRIX, m);
+    Mat4f matMV(m[0], m[1], m[2], m[3],
+        m[4], m[5], m[6], m[7],
+        m[8], m[9], m[10], m[11],
+        m[12], m[13], m[14], m[15]);
+
+    return matMV.transpose(); // convert to row major
 }

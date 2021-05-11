@@ -1,10 +1,12 @@
 #include "modelerapp.h"
-#include "modelerglobals.h"
+
 #include "model.h"
+#include "modelerglobals.h"
+#include "particleSystem.h"
 
 // We need to make a creator function, mostly because of
 // nasty API stuff that we'd rather stay away from.
-ModelerView *createSampleModel(int x, int y, int w, int h, char *label) {
+ModelerView* createSampleModel(int x, int y, int w, int h, char* label) {
 	return new Model(x, y, w, h, label);
 }
 
@@ -110,6 +112,12 @@ int main() {
 	controls[IK_ENABLE] = ModelerControl("Enable IK System", 0, 1, 1, 0);
 	controls[IK_POS] = ModelerControl("IK X POS", -5, 5, 0.01, 4.5);
 	controls[ARM_CONSTRAIN] = ModelerControl("ARM Constrain", 10, 180, 1, 180);
+
+	/* hook particle system to modeler app */
+	ParticleSystem* ps1 = new ParticleSystem();
+	ModelerApplication::Instance()->SetParticleSystem(ps1);
+	ParticleSystem* ps2 = new ParticleSystem();
+	ModelerApplication::Instance()->SetParticleSystem(ps2);
 
 	ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS); // Use the controls array to create the appropriate sliders.
 	return ModelerApplication::Instance()->Run();	// Run the application.

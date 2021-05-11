@@ -1,3 +1,4 @@
+#pragma once
 #ifndef _MODELER_GLOBALS_H
 #define _MODELER_GLOBALS_H
 
