@@ -94,8 +94,6 @@ public:
     //---[ Viewing Transform ]--------------------------------
     void applyViewingTransform();
     void frameAll(const double &, const double &, const double &);
-
-    void frameAll(const double&, const double&, const double&);
 	//---[ Animation ]-------------------------------------
 	void createCurves(float t, float maxX);
 	void deleteCurves();

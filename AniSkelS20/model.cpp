@@ -442,9 +442,9 @@ std::vector<char> Model::gsentence1(const int stage) {
 				next.push_back('+');
 				next.push_back('F');
 				next.push_back(']');
-			} 			else next.push_back(current[l]);
-			}
-			else next.push_back(current[l]);
+			} else 
+				next.push_back(current[l]);
+			
 		}
 		current = next;
 	}
@@ -480,8 +480,7 @@ std::vector<char> Model::gsentence2(const int stage) {
 				next.push_back('F');
 				next.push_back(']');
 			} 			else next.push_back(current[l]);
-			}
-			else next.push_back(current[l]);
+			
 		}
 		current = next;
 	}
@@ -525,7 +524,8 @@ void Model::drawLsystem(const std::vector<char>& sentence, int option) {
 		case ']':
 			glPopMatrix();
 			break;
-		default: break;
+		default: 
+			break;
 		}
 	}
 
